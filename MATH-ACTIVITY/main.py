@@ -38,4 +38,5 @@ def evenOdd():
 def fibonnaciSeries():
     return render_template("fibonnaciSeries.html")
 
+
 app.run(debug=True)
