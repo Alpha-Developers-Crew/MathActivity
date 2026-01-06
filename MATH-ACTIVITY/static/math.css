@@ -1,0 +1,31 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    min-height: 100vh;
+    font-family: cursive;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* BLURRED BACKGROUND */
+body::before{
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    background:
+      linear-gradient(rgba(12, 22, 38, 0.75), rgba(12, 22, 38, 0.75)),
+      url("final.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    filter: blur(0px);
+    transform: scale(1.1);
+    z-index: -1;
+}

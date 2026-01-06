@@ -1,0 +1,73 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --overlay: rgba(12, 22, 38, 0.65);
+
+    --heading-main: #cfe8e4;
+    --heading-accent: #f2d57e;
+
+    --card-bg: rgba(18, 35, 55, 0.7);
+    --glow-main: rgba(207, 232, 228, 0.4);
+    --glow-accent: rgba(242, 213, 126, 0.5);
+}
+
+body{
+    min-height: 100vh;
+    background:
+      linear-gradient(var(--overlay), var(--overlay)),
+      url("realmain.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    font-family: cursive;
+}
+
+#main{
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#maths_activity{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+/* HEADINGS */
+#heading1,
+#heading2{
+    width: fit-content;
+    padding: 20px 35px;
+    font-size: clamp(7rem, 12vw, 9rem);
+    border-radius: 1.5rem;
+    background: var(--card-bg);
+    backdrop-filter: blur(6px);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+/* Color difference */
+#heading1{
+    color: var(--heading-main);
+    box-shadow: 0 0 25px var(--glow-main);
+}
+
+#heading2{
+    color: var(--heading-accent);
+    box-shadow: 0 0 25px var(--glow-accent);
+}
+
+/* Hover effect */
+#heading1:hover,
+#heading2:hover{
+    cursor: pointer;
+    transform: scale(1.05);
+    box-shadow: 0 0 40px currentColor;
+}

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number-Play-Activity</title>
+    <link rel="stylesheet" href="static/activity.css">
+</head>
+
+<body id="activityPage">
+    <button id="btn">Previous</button>
+
+    <h1>Number Play</h1>
+    <hr>
+    <h3>Activity</h3>
+
+    <div class="content-wrapper">
+
+        <!-- LEFT SIDE -->
+        <div id="topics">
+            <ul>
+                <li id="evenOdd">Even & Odd</li>
+                <li id="cryptarithms">Cryptarithms</li>
+                <li id="digitalRoots">Digital Roots</li>
+                <li id="fibonnaciSeries">Fibonnaci Series</li>
+                <li id="divisibilityRules">Divisibility Rules</li>
+                <li id="consecutiveNumbers">Consecutive Numbers</li>
+            </ul>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="pdf-container">
+            <iframe src="{{ url_for('static', filename='pdfs/activity.pdf') }}" frameborder="0">
+            </iframe>
+        </div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='activity.js') }}"></script>
+</body>
+
+</html>

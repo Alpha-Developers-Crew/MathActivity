@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Roots</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #111831;
+            color: cadetblue;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: linear-gradient(145deg, #111831, #13434F);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.5),
+                0 0 30px rgba(30, 100, 113, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(30, 100, 113, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, cadetblue, #13434F, #0B252E);
+            z-index: 1;
+        }
+
+        h1 {
+            text-align: center;
+            color: cadetblue;
+            font-size: 3rem;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid cadetblue;
+            text-shadow: 0 0 10px rgba(30, 100, 113, 0.3);
+        }
+
+        h3 {
+            color: cadetblue;
+            margin: 25px 0 15px 0;
+            padding-left: 15px;
+            border-left: 4px solid cadetblue;
+            font-size: 1.5rem;
+        }
+
+        p {
+            margin: 15px 0;
+            font-size: 1.1rem;
+            background: rgba(11, 37, 46, 0.6);
+            padding: 18px;
+            border-radius: 10px;
+            border: 1px solid rgba(30, 100, 113, 0.2);
+            color: cadetblue;
+        }
+
+        b {
+            color: cadetblue;
+            font-weight: 600;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+
+        ul li {
+            margin: 12px 0;
+            padding: 12px 15px;
+            background: rgba(19, 67, 79, 0.3);
+            border-radius: 8px;
+            border-left: 4px solid cadetblue;
+            color: #8E8C88;
+            font-size: 1.1rem;
+            transition: transform 0.3s ease;
+        }
+
+        ul li:hover {
+            transform: translateX(5px);
+            background: rgba(19, 67, 79, 0.4);
+        }
+
+        ul li:before {
+            content: "▶";
+            color: cadetblue;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 0.9rem;
+        }
+
+        form {
+            background: rgba(11, 37, 46, 0.6);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px 0;
+            border: 1px solid rgba(30, 100, 113, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            display: block;
+            color: #8E8C88;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 15px;
+            background: #0B252E;
+            border: 2px solid #13434F;
+            border-radius: 8px;
+            color: #8E8C88;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: cadetblue;
+            box-shadow: 0 0 15px rgba(30, 100, 113, 0.3);
+        }
+
+        button {
+            background: linear-gradient(135deg, cadetblue, #13434F);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(30, 100, 113, 0.3);
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(30, 100, 113, 0.4);
+            background: linear-gradient(135deg, #13434F, cadetblue);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            display: none;
+            background: rgba(11, 37, 46, 0.8);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 25px;
+            border: 1px solid rgba(30, 100, 113, 0.4);
+            color: #8E8C88;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .step {
+            margin: 10px 0;
+            padding: 12px;
+            background: rgba(19, 67, 79, 0.2);
+            border-radius: 6px;
+            border-left: 3px solid cadetblue;
+            font-size: 1.1rem;
+        }
+
+        .step b {
+            color: cadetblue;
+        }
+
+        /* Example section styling */
+        .example {
+            background: rgba(19, 67, 79, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 1px solid rgba(30, 100, 113, 0.3);
+        }
+
+        .example p {
+            background: none;
+            border: none;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h3 {
+                font-size: 1.3rem;
+            }
+            
+            button {
+                padding: 12px 20px;
+            }
+        }
+
+        /* Add subtle background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 30%, rgba(30, 100, 113, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(19, 67, 79, 0.05) 0%, transparent 50%);
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Digital Roots</h1>
+        
+        <h3>Ye digital root hai kya</h3>
+        <p>
+            Chahe number kitna bhi bada ho, digit sum karte-karte
+            aakhir me <b>1 se 9</b> ke beech ek number hi bachta hai.
+        </p>
+
+        <h3>Why do we study Digital Root?</h3>
+        <ul>
+            <li>Number patterns samajhne ke liye</li>
+            <li>Fast checking (addition, divisibility)</li>
+            <li>Logical thinking develop karne ke liye</li>
+            <li>Maths ko fun banane ke liye</li>
+        </ul>
+
+        <h3>Example</h3>
+        <div class="example">
+            <p>
+                Suppose number = <b>458</b><br>
+                4 + 5 + 8 = 17<br>
+                1 + 7 = <b>8</b><br><br>
+                Digital Root of 458 = <b>8</b>
+            </p>
+        </div>
+
+        <h3>Observation</h3>
+        <p>Ki kisi bhi 9 se divisible number ka digital root 9 hi hoga</p>
+        <p>Agar digital root 9 nhi hai to jo digital root hai wo remainder hoga 9 se us number ko divide karne ke baad</p>
+        
+        <form>
+            <label for="num">Wanna try it out?</label>
+            <input type="number" id="num" placeholder="Enter a number...">
+            <button type="button" onclick="findRoot()">Find Digital Root</button>
+            <div class="result" id="output"></div>
+        </form>
+    </div>
+
+    <script>
+        function findRoot() {
+            let n = document.getElementById("num").value;
+
+            // Empty input check
+            if (n === "") {
+                alert("Please enter a number");
+                return;
+            }
+
+            // Handle negative numbers
+            if (n.startsWith('-')) {
+                n = n.substring(1); // Remove minus sign for calculation
+            }
+
+            let original = n;   // original number save
+            let steps = [];     // steps store karne ke liye array
+            let sum;
+
+            // Jab tak number single digit na ban jaye
+            while (n.length > 1) {
+                sum = 0;
+
+                // Har digit ka sum
+                for (let d of n) {
+                    sum += Number(d);
+                }
+
+                // Step save karna (for display)
+                steps.push(`${n.split("").join(" + ")} = ${sum}`);
+
+                // n ko naya sum bana dena
+                n = sum.toString();
+            }
+
+            // Output HTML banana
+            let html = `<div class="step"> Given Number: <b>${original}</b></div>`;
+            html += `<div class="step"><b>Steps:</b></div>`;
+
+            steps.forEach(step => {
+                html += `<div class="step">${step}</div>`;
+            });
+
+            html += `<div class="step"><b>Digital Root = ${n}</b></div>`;
+            html += `<div class="step">Final answer hamesha ek single digit hota hai (1-9).</div>`;
+
+            // Output show karna
+            let box = document.getElementById("output");
+            box.style.display = "block";
+            box.innerHTML = html;
+            
+            // Clear input
+            document.getElementById("num").value = '';
+        }
+
+        // Allow Enter key to trigger calculation
+        document.getElementById("num").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                findRoot();
+            }
+        });
+    </script>
+</body>
+</html>

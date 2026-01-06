@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cryptarithms</title>
+    <style>
+        /* Cryptarithms CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .container {
+            background: rgba(25, 25, 40, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #00d4ff;
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #00d4ff;
+            text-shadow: 0 0 10px rgba(0, 212, 255, 0.3);
+        }
+
+        h3 {
+            color: #00d4ff;
+            margin: 25px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid #00d4ff;
+        }
+
+        p {
+            margin: 15px 0;
+            font-size: 1.1rem;
+            color: #b8c1ec;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #64dfdf;
+        }
+
+        pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            color: #64dfdf;
+            margin: 20px 0;
+            border: 1px solid rgba(100, 223, 223, 0.3);
+            text-align: center;
+            overflow-x: auto;
+            font-weight: bold;
+        }
+
+        #btn {
+            background: linear-gradient(45deg, #00d4ff, #4361ee);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 20px 0;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+        }
+
+        #btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
+            background: linear-gradient(45deg, #4361ee, #00d4ff);
+        }
+
+        #btn:active {
+            transform: translateY(0);
+        }
+
+        .v {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .i {
+            display: none;
+        }
+
+        #div {
+            background: rgba(30, 30, 46, 0.8);
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            border: 2px solid rgba(100, 223, 223, 0.4);
+        }
+
+        #div h3 {
+            color: #64dfdf;
+            border-left-color: #64dfdf;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 20px 0;
+            padding-left: 20px;
+        }
+
+        ul li {
+            margin: 10px 0;
+            padding: 10px 15px;
+            background: rgba(100, 223, 223, 0.1);
+            border-radius: 6px;
+            border-left: 4px solid #64dfdf;
+            color: #b8c1ec;
+            font-size: 1.1rem;
+        }
+
+        ul li:before {
+            content: "→ ";
+            color: #00d4ff;
+            font-weight: bold;
+        }
+
+        b {
+            color: #00d4ff;
+        }
+
+        pre + p {
+            background: rgba(67, 97, 238, 0.1);
+            border-left: 3px solid #4361ee;
+            font-weight: bold;
+            text-align: center;
+            color: #64dfdf;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            pre {
+                font-size: 1rem;
+                padding: 15px;
+            }
+            
+            #btn {
+                width: 100%;
+                padding: 15px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        pre:nth-of-type(1) {
+            background: rgba(0, 212, 255, 0.1);
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+        }
+
+        p:last-of-type {
+            background: rgba(0, 212, 255, 0.1);
+            border-left: 3px solid #00d4ff;
+            font-size: 1.1rem;
+            color: #ffffff;
+        }
+
+        p b {
+            color: #ff9e00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Cryptarithms</h1>
+        
+        <h3>Cryptarithm kya hota hai?</h3>
+        <p>Cryptarithm ek maths puzzle hota hai jisme numbers ki jagah letters likhe hote hain.
+        Hame har letter ke liye ek unique digit find karna hota hai taaki equation sahi ho jaaye.</p>
+
+        <p>Cryptarithm ek puzzle hai jisme letters numbers ko represent karte hain aur hume logic use karke un letters ke sahi digits dhoondhne hote hain.</p>
+
+        <h3>Puzzle</h3>
+        <pre>
+  TWO
++ TWO
+------
+ FOUR
+        </pre>
+
+        <p>
+            Is puzzle me har letter ek alag digit ko represent karta hai.
+            Same letter ka digit same hota hai aur koi bhi number 0 se start nahi hota.
+        </p>
+        
+        <button id="btn" onclick="showSolution()">Show Solution</button>
+
+        <div id="div" class="i">
+            <h3>Solution</h3>
+            <ul>
+                <li>T = 7</li>
+                <li>W = 3</li>
+                <li>O = 4</li>
+                <li>F = 1</li>
+                <li>U = 6</li>
+                <li>R = 8</li>
+            </ul>
+
+            <h3>Verification</h3>
+            <pre>
+TWO  = 734
+TWO  = 734
+-----------
+FOUR = 1468
+            </pre>
+
+            <p>734 + 734 = 1468</p>
+
+            <p><b>Conclusion:</b>  
+            This cryptarithm is solved correctly using logical thinking.</p>
+        </div>
+    </div>
+
+    <script>
+        let div = document.querySelector("#div");
+        let btn = document.querySelector("#btn");
+        let val = true;
+        
+        function showSolution(){
+            if(val === true){
+                div.classList.add('v');
+                div.classList.remove('i');
+                btn.innerText = "Hide Solution";
+                val = false;
+            }
+            else {
+                div.classList.add('i');
+                div.classList.remove('v');
+                btn.innerText = "Show Solution";
+                val = true;
+            }
+        }
+    </script>
+</body>
+</html>

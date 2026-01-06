@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Divisibility Rules</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0C0B1D 0%, #161533 100%);
+            color: #E8E8F0;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(22, 21, 51, 0.95);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 
+                0 20px 50px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 105, 180, 0.1),
+                0 0 40px rgba(138, 43, 226, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Neon border effect */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, 
+                #FF69B4, 
+                #8A2BE2, 
+                #4B0082, 
+                #0000FF,
+                #008080,
+                #32CD32,
+                #FFFF00,
+                #FFA500,
+                #FF4500,
+                #FF69B4
+            );
+            z-index: 1;
+        }
+
+        h1 {
+            text-align: center;
+            color: #FF69B4;
+            font-size: 3.5rem;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            position: relative;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.4);
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #FF69B4, transparent);
+        }
+
+        p {
+            margin: 18px 0;
+            font-size: 1.1rem;
+            padding: 18px 22px;
+            border-radius: 12px;
+            background: rgba(138, 43, 226, 0.08);
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            transition: all 0.3s ease;
+            color: #D8D8E8;
+        }
+
+        p:hover {
+            transform: translateX(5px);
+            background: rgba(138, 43, 226, 0.12);
+            border-color: rgba(138, 43, 226, 0.4);
+        }
+
+        h3 {
+            color: #00CED1;
+            font-size: 1.8rem;
+            margin: 35px 0 20px 0;
+            padding-left: 15px;
+            border-left: 5px solid #00CED1;
+            text-shadow: 0 0 10px rgba(0, 206, 209, 0.3);
+        }
+
+        /* Different colors for each rule */
+        p:nth-child(4) { /* Rule for 2 */
+            border-left: 4px solid #FF69B4;
+            background: rgba(255, 105, 180, 0.08);
+        }
+
+        p:nth-child(5) { /* Rule for 3 */
+            border-left: 4px solid #8A2BE2;
+            background: rgba(138, 43, 226, 0.08);
+        }
+
+        p:nth-child(6) { /* Rule for 4 */
+            border-left: 4px solid #4B0082;
+            background: rgba(75, 0, 130, 0.08);
+        }
+
+        p:nth-child(7) { /* Rule for 5 */
+            border-left: 4px solid #0000FF;
+            background: rgba(0, 0, 255, 0.08);
+        }
+
+        p:nth-child(8) { /* Rule for 6 */
+            border-left: 4px solid #008080;
+            background: rgba(0, 128, 128, 0.08);
+        }
+
+        p:nth-child(9) { /* Rule for 7 */
+            border-left: 4px solid #32CD32;
+            background: rgba(50, 205, 50, 0.08);
+        }
+
+        p:nth-child(10) { /* Rule for 8 */
+            border-left: 4px solid #FFFF00;
+            background: rgba(255, 255, 0, 0.08);
+            color: #FFF;
+        }
+
+        p:nth-child(11) { /* Rule for 9 */
+            border-left: 4px solid #FFA500;
+            background: rgba(255, 165, 0, 0.08);
+        }
+
+        p:nth-child(12) { /* Rule for 10 */
+            border-left: 4px solid #FF4500;
+            background: rgba(255, 69, 0, 0.08);
+        }
+
+        i {
+            color: #FF69B4;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        b {
+            color: #00CED1;
+            font-weight: 600;
+        }
+
+        form {
+            background: rgba(22, 21, 51, 0.8);
+            padding: 30px;
+            border-radius: 16px;
+            margin: 40px 0;
+            border: 2px solid rgba(0, 206, 209, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        label {
+            display: block;
+            color: #E8E8F0;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        input[type="number"] {
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px solid #8A2BE2;
+            border-radius: 10px;
+            color: #E8E8F0;
+            font-size: 1.1rem;
+            margin: 10px 0;
+            width: 200px;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #FF69B4;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.3);
+            transform: translateY(-2px);
+        }
+
+        button {
+            background: linear-gradient(135deg, #8A2BE2, #4B0082);
+            color: white;
+            border: none;
+            padding: 16px 35px;
+            font-size: 1.2rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(138, 43, 226, 0.4);
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(138, 43, 226, 0.6);
+            background: linear-gradient(135deg, #FF69B4, #8A2BE2);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        #val {
+            background: rgba(0, 206, 209, 0.1);
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 25px;
+            border: 2px solid rgba(0, 206, 209, 0.3);
+            color: #E8E8F0;
+            font-size: 1.3rem;
+            text-align: center;
+            font-weight: 500;
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Success and error states */
+        #val[style*="divisible"] {
+            background: rgba(50, 205, 50, 0.15);
+            border-color: rgba(50, 205, 50, 0.4);
+            color: #90EE90;
+        }
+
+        #val[style*="not divisible"] {
+            background: rgba(255, 69, 0, 0.15);
+            border-color: rgba(255, 69, 0, 0.4);
+            color: #FFB6C1;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Floating math symbols background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 105, 180, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(138, 43, 226, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 50% 50%, rgba(0, 206, 209, 0.03) 0%, transparent 30%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h3 {
+                font-size: 1.5rem;
+            }
+            
+            input[type="number"] {
+                width: 100%;
+                margin: 10px 0;
+            }
+            
+            form {
+                padding: 20px;
+            }
+            
+            button {
+                width: 100%;
+                padding: 18px;
+            }
+        }
+
+        /* Rule number styling */
+        p::before {
+            content: 'For ';
+            color: #FF69B4;
+            font-weight: bold;
+        }
+
+        p::after {
+            content: '';
+            display: block;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            margin-top: 10px;
+        }
+
+        /* Form label styling */
+        form label {
+            color: #00CED1;
+            font-weight: 600;
+        }
+
+        /* Grid layout for rules on desktop */
+        @media (min-width: 1024px) {
+            .rules-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+            
+            .rules-container p {
+                margin: 10px 0;
+                height: fit-content;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Divisibility Rules</h1>
+        <p>A divisibility rule is a simple method or shortcut used in mathematics to check whether one number is divisible by another number without actually doing the division.</p>
+        
+        <h3>Divisibility Rules</h3>
+        <div class="rules-container">
+            <p>2 :- If the last digit of the number is even then the number is divisible by 2</p>
+            <p>3 :- If the sum of the digits of the number is divisible by 3 then the number is divisible by 3</p>
+            <p>4 :- If the last 2 digits of the number is divisible by 4 then the number is divisible by 4</p>
+            <p>5 :- If the last digit of the number is 0 or 5 then the number is divisible by 5</p>
+            <p>6 :- If the number is even and divisible by 3 then the number is divisible by 6</p>
+            <p>7 :- The divisibility rule of 7 states that you should take the last digit of the number, double it, and then subtract that result from the rest of the number. If the final result is a multiple of 7 or 0, the original number is divisible by 7.</p>
+            <p>8 :- If the last 3 digits of the number is divisible by 8 then the number is divisible by 8</p>
+            <p>9 :- If the sum of the digits of the number is divisible by 9 then the number is divisible by 9</p>
+            <p>10 :- If the number has 0 at its units place then the number is divisible by 10</p>
+        </div>
+
+        <form>
+            <label>Check if the number 
+                <input type="number" id="dividend" placeholder="Enter number"> 
+                is divisible by
+                <input type="number" id="divisor" placeholder="Enter divisor"> 
+                or not
+            </label>
+            <button id="btn">Check Divisibility</button>
+            <div id="val"></div>
+        </form>
+    </div>
+
+    <script>
+        let dividend = document.querySelector("#dividend");
+        let divisor = document.querySelector("#divisor");
+        let btn = document.querySelector("#btn");
+        let val = document.querySelector("#val");
+
+        btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            val.style.display = "block";
+            
+            if(dividend.value === ''){
+                val.innerText = "Please enter the dividend";
+                return;
+            }
+            if(divisor.value === ''){
+                val.innerText = "Please enter the divisor";
+                return;
+            }
+
+            let intDivisor = Number(divisor.value);
+            let intDividend = Number(dividend.value);
+
+            // Check for division by zero
+            if(intDivisor === 0) {
+                val.innerText = "Cannot divide by zero!";
+                return;
+            }
+
+            if(intDividend % intDivisor === 0){
+                val.innerText = `✅ Yes! ${intDividend} is divisible by ${intDivisor}`;
+            }
+            else{
+                val.innerText = `❌ No! ${intDividend} is not divisible by ${intDivisor}`;
+            }
+            
+            // Clear inputs after checking
+            dividend.value = '';
+            divisor.value = '';
+        });
+
+        // Allow Enter key to trigger check
+        dividend.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                btn.click();
+            }
+        });
+
+        divisor.addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                btn.click();
+            }
+        });
+    </script>
+</body>
+</html>
